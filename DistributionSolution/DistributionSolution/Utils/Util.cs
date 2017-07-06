@@ -197,7 +197,7 @@ namespace DistributionSolution.Utils
 
         public static string GetResourcePath()
         {
-            var path = Path.Combine(AppContext.BaseDirectory, "Resource");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resource");
             return path;
         }
 

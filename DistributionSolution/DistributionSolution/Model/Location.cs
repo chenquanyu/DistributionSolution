@@ -27,7 +27,7 @@ namespace DistributionSolution.Model
 
             if (DistanceInfo == null)
             {
-                DistanceInfo = JsonUtil.DeSerialize<Dictionary<string, decimal>>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"Resource\DistanceInfo.json")));
+                DistanceInfo = JsonUtil.DeSerialize<Dictionary<string, decimal>>(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resource\DistanceInfo.json")));
             }
 
             //var cache = MemoryCache.Default;

@@ -18,8 +18,6 @@ namespace DistributionSolution.Business.Tests
         [TestMethod()]
         public void SimulationByDaysTest()
         {
-            Stopwatch sw = new Stopwatch();
-
             var vans = new List<Van> {
                 new Van ("A", 6000, 1),
                 new Van ("B", 6000, 1),
@@ -30,7 +28,6 @@ namespace DistributionSolution.Business.Tests
 
             List<Van> tempVans = new List<Van>(vans);
             var VansPermutation = new List<List<Van>>();
-            sw.Start();
             Util.Permutation(vans, 5, tempVans, VansPermutation);
 
             //工厂地址
@@ -52,10 +49,7 @@ namespace DistributionSolution.Business.Tests
 
             decimal shortestDistince = Decimal.MaxValue;
             Simulation bestSim = null;
-
-            sw.Stop();
-            Console.WriteLine(sw.ElapsedMilliseconds);
-
+            
             List<string> visitedVanListKey = new List<string>();
             //对货车顺序全排列
             foreach (var item in VansPermutation)
@@ -79,22 +73,17 @@ namespace DistributionSolution.Business.Tests
                     {
                         continue;
                     };
-
-                    sw.Restart();
-
+                    
                     company.Vans = item;
 
-                    var sim = new Simulation(company, warehouses, part, 365);
+                    var sim = new Simulation(company, warehouses, part, 10);
 
                     if (sim.SimulationByDays() && sim.TotalDistance < shortestDistince)
                     {
                         shortestDistince = sim.TotalDistance;
                         bestSim = sim;
                     }
-
-                    sw.Stop();
-                    Console.WriteLine(sw.ElapsedMilliseconds);
-
+                    
                 }
             }
 
@@ -179,7 +168,7 @@ namespace DistributionSolution.Business.Tests
         private List<Warehouse> GetWarehousesFromExcel()
         {
             List<Warehouse> result = new List<Warehouse>();
-            string fileName = @"D:\路线规划.xlsx";
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Resource\路线规划.xlsx");
             var temp = ExcelUtil.ReadSheet(fileName, 1, "A3", "D29");
             Random random = new Random();
             foreach (var row in temp)
@@ -201,7 +190,7 @@ namespace DistributionSolution.Business.Tests
 
         private void WriteResult(string result)
         {
-            string fileName = Path.Combine(AppContext.BaseDirectory, @"result.txt");
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"result.txt");
             File.WriteAllText(fileName, result);
         }
 
