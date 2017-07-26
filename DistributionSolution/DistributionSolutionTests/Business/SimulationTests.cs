@@ -18,6 +18,7 @@ namespace DistributionSolution.Business.Tests
         [TestMethod()]
         public void SimulationByDaysTest()
         {
+
             var vans = new List<Van> {
                 new Van ("A", 6000, 1),
                 new Van ("B", 6000, 1),
